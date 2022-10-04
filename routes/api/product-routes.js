@@ -25,8 +25,8 @@ router.get('/:id', async (req, res) => {
   try {
     const idData = await Product.findOne({
       id: req.params.id,
-    include: Category,
-    include: Tag
+      include: Category,
+      include: Tag
     });
     res.status(200).json(idData);
   } catch (err) {
@@ -71,8 +71,8 @@ router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
-      id: req.params.id,
-    },
+      id: req.params.id
+    }
   })
     .then((product) => {
       // find all associated tags from ProductTag
@@ -112,7 +112,9 @@ router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
   try {
     const deleteProduct = await Product.destroy({
-    id: req.params.id
+      where: {
+        id: req.params.id
+          }
     });
     res.status(200).json(deleteProduct);
   } catch (err) {
